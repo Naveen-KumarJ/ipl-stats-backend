@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer from "puppeteer";
 
 const categories = {
   orangeCap: "Orange Cap",
@@ -13,7 +13,10 @@ export const scrapeAllStats = async (year, categoryKey) => {
     throw new Error("Invalid category key");
   }
 
-  const browser = await puppeteer.launch({headless:false, slowMo:100});
+  const browser = await puppeteer.launch({
+    headless: "new",
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
 
   await page.goto(`https://www.iplt20.com/stats/${year}`, {
@@ -30,8 +33,8 @@ export const scrapeAllStats = async (year, categoryKey) => {
     if (target) target.click();
   }, tabLabel);
 
-  await new Promise(resolve => setTimeout(resolve, 2000));
-  
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   const data = await page.evaluate(() => {
     const rows = document.querySelectorAll(".statsTable tbody tr");
     return Array.from(rows)
