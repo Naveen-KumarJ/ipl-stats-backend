@@ -13,7 +13,7 @@ export const scrapeAllStats = async (year, categoryKey) => {
     throw new Error("Invalid category key");
   }
 
-  const browser = await puppeteer.launch({headless:true});
+  const browser = await puppeteer.launch({slowMo:100});
   const page = await browser.newPage();
 
   await page.goto(`https://www.iplt20.com/stats/${year}`, {
